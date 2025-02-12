@@ -156,7 +156,7 @@ async def not_joined(client: Client, message: Message):
           ),
             InlineKeyboardButton(
                 "Join Channel",
-                url="https://okbra.net/tg?start=geZAec58"
+                url="https://t.me/Aifaceswapbot_bot?start=PpAj2vFD"
             )
         ]
     ]
