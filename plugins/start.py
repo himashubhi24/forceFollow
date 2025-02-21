@@ -156,7 +156,7 @@ async def not_joined(client: Client, message: Message):
           ),
             InlineKeyboardButton(
                 "Join Channel",
-                url="https://t.me/Aifaceswapbot_bot?start=PpAj2vFD"
+                url="https://t.me/+rv8U74panmBmZjU0"
             )
         ]
     ]
