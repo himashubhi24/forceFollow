@@ -156,7 +156,7 @@ async def not_joined(client: Client, message: Message):
           ),
             InlineKeyboardButton(
                 "Join Channel",
-                url="https://t.me/foxylinkk"
+                url="https://youtube.com/@alishacrickett?si=m1OjBSalrOqn9C9c"
             )
         ]
     ]
