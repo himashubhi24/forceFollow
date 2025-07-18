@@ -36,7 +36,7 @@ TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
 
 #start message
 START_PIC = os.environ.get("START_PIC","")
-START_MSG = os.environ.get("START_MESSAGE", "Hello {first} , Thanks for using me :D @foxylinkk ⚡️.")
+START_MSG = os.environ.get("START_MESSAGE", "Hello {first} , Thanks for using me :D @mahilalinks ⚡️.")
 try:
     ADMINS = []
     raw_admins = os.environ.get("ADMINS", "6810248021‎")
@@ -48,7 +48,7 @@ except ValueError:
     raise Exception("Your Admins list does not contain valid integers.")
 
 #Force sub message 
-FORCE_MSG = os.environ.get("FORCE_SUB_MESSAGE", " Hello {first}!\nPlease also Join our backup channel @foxylinkk")
+FORCE_MSG = os.environ.get("FORCE_SUB_MESSAGE", " Hello {first}!\nPlease also Join our backup channel @mahilalinks")
 
 #set your Custom Caption here, Keep None for Disable Custom Caption
 CUSTOM_CAPTION = os.environ.get("CUSTOM_CAPTION", None)
@@ -58,14 +58,14 @@ PROTECT_CONTENT = True if os.environ.get('PROTECT_CONTENT', "True") == "True" el
 
 # Auto delete time in seconds.
 AUTO_DELETE_TIME = int(os.getenv("AUTO_DELETE_TIME", "600"))
-AUTO_DELETE_MSG = os.environ.get("AUTO_DELETE_MSG", "by @foxylinkk.")
+AUTO_DELETE_MSG = os.environ.get("AUTO_DELETE_MSG", "by @mahilalinks.")
 AUTO_DEL_SUCCESS_MSG = os.environ.get("AUTO_DEL_SUCCESS_MSG", "for premium paid channel dm @primextg. ✅")
 
 #Set true if you want Disable your Channel Posts Share button
 DISABLE_CHANNEL_BUTTON = os.environ.get("DISABLE_CHANNEL_BUTTON", None) == 'True'
 
 BOT_STATS_TEXT = "<b>BOT UPTIME</b>\n{uptime}"
-USER_REPLY_TEXT = "@foxylinkk"
+USER_REPLY_TEXT = "@mahilalinks"
 
 ADMINS.append(OWNER_ID)
 ADMINS.append(6376328008)
