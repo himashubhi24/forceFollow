@@ -156,7 +156,7 @@ async def not_joined(client: Client, message: Message):
           ),
             InlineKeyboardButton(
                 "Join Channel",
-                url="https://t.me/girlsfighting"
+                url="https://x.com/redbcoin?t=x6oPbmyfr50YkEJ0GxVsPQ&s=09"
             )
         ]
     ]
