@@ -156,7 +156,7 @@ async def not_joined(client: Client, message: Message):
           ),
             InlineKeyboardButton(
                 "Join Channel",
-                url="https://x.com/redbcoin?t=x6oPbmyfr50YkEJ0GxVsPQ&s=09"
+                url="https://whatsapp.com/channel/0029Vao0ZpSIXnlhsFtcky3a"
             )
         ]
     ]
