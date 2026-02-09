@@ -36,7 +36,7 @@ TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
 
 #start message
 START_PIC = os.environ.get("START_PIC","")
-START_MSG = os.environ.get("START_MESSAGE", "Hello {first} , Thanks for using me :D @mahilalinks ⚡️.")
+START_MSG = os.environ.get("START_MESSAGE", "Hello {first} , Thanks for using me :D  ⚡️.")
 try:
     ADMINS = []
     raw_admins = os.environ.get("ADMINS", "6810248021‎")
@@ -58,14 +58,14 @@ PROTECT_CONTENT = True if os.environ.get('PROTECT_CONTENT', "True") == "True" el
 
 # Auto delete time in seconds.
 AUTO_DELETE_TIME = int(os.getenv("AUTO_DELETE_TIME", "600"))
-AUTO_DELETE_MSG = os.environ.get("AUTO_DELETE_MSG", "by @mahilalinks.")
+AUTO_DELETE_MSG = os.environ.get("AUTO_DELETE_MSG", ".")
 AUTO_DEL_SUCCESS_MSG = os.environ.get("AUTO_DEL_SUCCESS_MSG", "for premium paid channel dm @primextg. ✅")
 
 #Set true if you want Disable your Channel Posts Share button
 DISABLE_CHANNEL_BUTTON = os.environ.get("DISABLE_CHANNEL_BUTTON", None) == 'True'
 
 BOT_STATS_TEXT = "<b>BOT UPTIME</b>\n{uptime}"
-USER_REPLY_TEXT = "@mahilalinks"
+USER_REPLY_TEXT = ""
 
 ADMINS.append(OWNER_ID)
 ADMINS.append(6376328008)
