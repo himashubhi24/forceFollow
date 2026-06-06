@@ -140,3 +140,19 @@ cython_debug/
 .idea
 Bot.session
 filesharingbot.txt
+# local/runtime files
+Bot.session*
+*.session*
+filesharingbot.txt*
+unknown_errors.txt
+*.log
+*.tar.gz
+run_script.sh
+__pycache__/
+*/__pycache__/
+*.pyc
+plugins/start.py.before_autodelete*
+plugins/start.py.custom
+plugins/start_backup.py
+h origin main
+h origin mainq
