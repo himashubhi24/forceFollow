@@ -12,10 +12,19 @@ from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL
 from helper_func import subscribed,decode, get_messages, delete_file
 from database.database import add_user, del_user, full_userbase, present_user
 
+async def auto_delete_message(msg, delay=60):
+    try:
+        await asyncio.sleep(delay)
+        await msg.delete()
+    except:
+        pass
+
+
 
 botlink = f"https kesath yaha link dalna "
 @Bot.on_message(filters.command('start') & filters.private & subscribed)
 async def start_command(client: Client, message: Message):
+    asyncio.create_task(auto_delete_message(message, 60))
     id = message.from_user.id
     if not await present_user(id):
         try:
@@ -52,10 +61,11 @@ async def start_command(client: Client, message: Message):
             except:
                 return
         temp_msg = await message.reply("Please wait...")
+        asyncio.create_task(auto_delete_message(temp_msg, 60))
         try:
             messages = await get_messages(client, ids)
         except:
-            await message.reply_text("Something went wrong..!")
+            start_msg = await message.reply_text("Something went wrong..!")
             return
         await temp_msg.delete()
 
@@ -92,11 +102,13 @@ async def start_command(client: Client, message: Message):
 
             else:
                 try:
-                    await msg.copy(chat_id=message.from_user.id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup, protect_content=PROTECT_CONTENT)
+                    sent_media = await msg.copy(chat_id=message.from_user.id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup, protect_content=PROTECT_CONTENT)
+                    asyncio.create_task(auto_delete_message(sent_media, 120))
                     await asyncio.sleep(0.5)
                 except FloodWait as e:
                     await asyncio.sleep(e.value)
-                    await msg.copy(chat_id=message.from_user.id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup, protect_content=PROTECT_CONTENT)
+                    sent_media = await msg.copy(chat_id=message.from_user.id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup, protect_content=PROTECT_CONTENT)
+                    asyncio.create_task(auto_delete_message(sent_media, 120))
                 except:
                     pass
         return
@@ -110,7 +122,7 @@ async def start_command(client: Client, message: Message):
             ]
         )
         if START_PIC:  # Check if START_PIC has a value
-            await message.reply_photo(
+            start_msg = await message.reply_photo(
                 photo=START_PIC,
                 caption=START_MSG.format(
                     first=message.from_user.first_name,
@@ -135,6 +147,10 @@ async def start_command(client: Client, message: Message):
                 disable_web_page_preview=True,
                 quote=True
             )
+        try:
+            asyncio.create_task(auto_delete_message(start_msg, 60))
+        except:
+            pass
         return
 
     
@@ -148,6 +164,7 @@ REPLY_ERROR = """<code>Use this command as a replay to any telegram message with
 
 @Bot.on_message(filters.command('start') & filters.private)
 async def not_joined(client: Client, message: Message):
+    asyncio.create_task(auto_delete_message(message, 60))
     buttons = [
         [
             InlineKeyboardButton(
@@ -172,7 +189,7 @@ async def not_joined(client: Client, message: Message):
     except IndexError:
         pass
 
-    await message.reply(
+    join_msg = await message.reply(
         text = FORCE_MSG.format(
                 first = message.from_user.first_name,
                 last = message.from_user.last_name,
@@ -184,6 +201,7 @@ async def not_joined(client: Client, message: Message):
         quote = True,
         disable_web_page_preview = True
     )
+    asyncio.create_task(auto_delete_message(join_msg, 60))
 
 @Bot.on_message(filters.command('users') & filters.private & filters.user(ADMINS))
 async def get_users(client: Bot, message: Message):
