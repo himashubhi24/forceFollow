@@ -9,7 +9,6 @@ from pyrogram.enums import ChatMemberStatus
 from config import FORCE_SUB_CHANNEL, ADMINS, AUTO_DELETE_TIME, AUTO_DEL_SUCCESS_MSG
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 from pyrogram.errors import FloodWait
-from admin_fsub_common import is_user_authorized_for_force_sub
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -23,9 +22,20 @@ scheduler = BackgroundScheduler()
 
 
 async def is_subscribed(filter, client, update):
-    if not getattr(update, 'from_user', None):
+    if not FORCE_SUB_CHANNEL:
         return True
-    return await is_user_authorized_for_force_sub(client, update.from_user.id)
+    user_id = update.from_user.id
+    if user_id in ADMINS:
+        return True
+    try:
+        member = await client.get_chat_member(chat_id = FORCE_SUB_CHANNEL, user_id = user_id)
+    except UserNotParticipant:
+        return False
+
+    if not member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]:
+        return False
+    else:
+        return True
 
 async def encode(string):
     string_bytes = string.encode("ascii")

@@ -11,7 +11,6 @@ from bot import Bot
 from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT, START_PIC, AUTO_DELETE_TIME, AUTO_DELETE_MSG
 from helper_func import subscribed,decode, get_messages, delete_file
 from database.database import add_user, del_user, full_userbase, present_user
-from admin_fsub_common import send_force_sub_gate
 
 async def auto_delete_message(msg, delay=60):
     try:
@@ -166,11 +165,43 @@ REPLY_ERROR = """<code>Use this command as a replay to any telegram message with
 @Bot.on_message(filters.command('start') & filters.private)
 async def not_joined(client: Client, message: Message):
     asyncio.create_task(auto_delete_message(message, 60))
-    handled = await send_force_sub_gate(client, message)
-    if handled:
-        return
-    return
+    buttons = [
+        [
+            InlineKeyboardButton(
+                "Join Channel",
+                url=client.invitelink
+          ),
+            InlineKeyboardButton(
+                "Join Channel",
+                url="https://whatsapp.com/channel/0029Vao0ZpSIXnlhsFtcky3a"
+            )
+        ]
+    ]
+    try:
+        buttons.append(
+            [
+                InlineKeyboardButton(
+                    text = 'Try Again',
+                    url = f"https://t.me/{client.username}?start={message.command[1]}"
+                )
+            ]
+        )
+    except IndexError:
+        pass
 
+    join_msg = await message.reply(
+        text = FORCE_MSG.format(
+                first = message.from_user.first_name,
+                last = message.from_user.last_name,
+                username = None if not message.from_user.username else '@' + message.from_user.username,
+                mention = message.from_user.mention,
+                id = message.from_user.id
+            ),
+        reply_markup = InlineKeyboardMarkup(buttons),
+        quote = True,
+        disable_web_page_preview = True
+    )
+    asyncio.create_task(auto_delete_message(join_msg, 60))
 
 @Bot.on_message(filters.command('users') & filters.private & filters.user(ADMINS))
 async def get_users(client: Bot, message: Message):
