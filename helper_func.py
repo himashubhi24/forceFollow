@@ -61,7 +61,9 @@ async def get_messages(client, message_ids):
                 message_ids=temb_ids
             )
         except FloodWait as e:
-            await asyncio.sleep(e.x)
+            delay = getattr(e, "value", getattr(e, "x", 0))
+            if delay:
+                await asyncio.sleep(delay)
             msgs = await client.get_messages(
                 chat_id=client.db_channel.id,
                 message_ids=temb_ids
@@ -122,11 +124,12 @@ async def delete_file(message, client, process):
         try:
             scheduler.add_job(msg.delete, 'date', run_date=datetime.now() + timedelta(seconds=AUTO_DELETE_TIME))
         except Exception as e:
-            await asyncio.sleep(e.value)
+            delay = getattr(e, "value", getattr(e, "x", 0))
+            if delay:
+                await asyncio.sleep(delay)
+    if process is not None:
 
-    await process.edit_text(AUTO_DEL_SUCCESS_MSG)
-
-
+        await process.edit_text(AUTO_DEL_SUCCESS_MSG)
 subscribed = filters.create(is_subscribed)
 
 # start scheduler

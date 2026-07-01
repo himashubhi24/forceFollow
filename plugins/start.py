@@ -12,7 +12,7 @@ from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL
 from helper_func import subscribed,decode, get_messages, delete_file
 from database.database import add_user, del_user, full_userbase, present_user
 
-async def auto_delete_message(msg, delay=60):
+async def auto_delete_message(msg, delay=300):
     try:
         await asyncio.sleep(delay)
         await msg.delete()
@@ -24,7 +24,7 @@ async def auto_delete_message(msg, delay=60):
 botlink = f"https kesath yaha link dalna "
 @Bot.on_message(filters.command('start') & filters.private & subscribed)
 async def start_command(client: Client, message: Message):
-    asyncio.create_task(auto_delete_message(message, 60))
+    asyncio.create_task(auto_delete_message(message, 300))
     id = message.from_user.id
     if not await present_user(id):
         try:
@@ -61,7 +61,7 @@ async def start_command(client: Client, message: Message):
             except:
                 return
         temp_msg = await message.reply("Please wait...")
-        asyncio.create_task(auto_delete_message(temp_msg, 60))
+        asyncio.create_task(auto_delete_message(temp_msg, 300))
         try:
             messages = await get_messages(client, ids)
         except:
@@ -103,12 +103,12 @@ async def start_command(client: Client, message: Message):
             else:
                 try:
                     sent_media = await msg.copy(chat_id=message.from_user.id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup, protect_content=PROTECT_CONTENT)
-                    asyncio.create_task(auto_delete_message(sent_media, 120))
+                    asyncio.create_task(auto_delete_message(sent_media, 300))
                     await asyncio.sleep(0.5)
                 except FloodWait as e:
                     await asyncio.sleep(e.value)
                     sent_media = await msg.copy(chat_id=message.from_user.id, caption=caption, parse_mode=ParseMode.HTML, reply_markup=reply_markup, protect_content=PROTECT_CONTENT)
-                    asyncio.create_task(auto_delete_message(sent_media, 120))
+                    asyncio.create_task(auto_delete_message(sent_media, 300))
                 except:
                     pass
         return
@@ -148,7 +148,7 @@ async def start_command(client: Client, message: Message):
                 quote=True
             )
         try:
-            asyncio.create_task(auto_delete_message(start_msg, 60))
+            asyncio.create_task(auto_delete_message(start_msg, 300))
         except:
             pass
         return
@@ -164,7 +164,7 @@ REPLY_ERROR = """<code>Use this command as a replay to any telegram message with
 
 @Bot.on_message(filters.command('start') & filters.private)
 async def not_joined(client: Client, message: Message):
-    asyncio.create_task(auto_delete_message(message, 60))
+    asyncio.create_task(auto_delete_message(message, 300))
     buttons = [
         [
             InlineKeyboardButton(
@@ -201,7 +201,7 @@ async def not_joined(client: Client, message: Message):
         quote = True,
         disable_web_page_preview = True
     )
-    asyncio.create_task(auto_delete_message(join_msg, 60))
+    asyncio.create_task(auto_delete_message(join_msg, 300))
 
 @Bot.on_message(filters.command('users') & filters.private & filters.user(ADMINS))
 async def get_users(client: Bot, message: Message):
